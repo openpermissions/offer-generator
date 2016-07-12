@@ -23,7 +23,8 @@ const React = require('react'),
       _ = require('lodash'),
       actions = require('../actions/index'),
       PropTypes = require('../prop-types'),
-      OfferComponent = require('../components/offer');
+      OfferComponent = require('../components/offer'),
+      {Button, FormGroup, Panel} = require('react-bootstrap');
 
 
 const OfferGenerator = React.createClass({
@@ -66,12 +67,9 @@ const OfferGenerator = React.createClass({
     }
 
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">Generated Offer</div>
-        <div className="panel-body">
-          {jsonld}
-        </div>
-      </div>
+      <Panel header="Generated Offer">
+        {jsonld}
+      </Panel>
     );
   },
 
@@ -88,9 +86,10 @@ const OfferGenerator = React.createClass({
             <OfferComponent
               template={this.props.template}
             />
-            <div className='form-group col col-xs-12 cb'>
-              <button className='btn btn-primary' type="submit">Generate Offer</button>
-            </div>
+
+            <FormGroup className='col col-xs-12 cb'>
+              <Button bsStyle="success" type="submit">Generate Offer</Button>
+            </FormGroup>
           </form>
         </div>
       );

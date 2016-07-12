@@ -23,7 +23,8 @@ const React = require('react'),
       actions = require('../actions'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
-      constraints = require('../util').constraints;
+      constraints = require('../util').constraints,
+      {FormGroup, Button} = require('react-bootstrap');
 
 
 const ConstraintValue = React.createClass({
@@ -99,12 +100,12 @@ const ConstraintValue = React.createClass({
 
     return (
       <div>
-        <div className='form-group col col-xs-12 cb'>
+        <FormGroup className='col col-xs-12 cb'>
           {keyItem}
-        </div>
-        <div className='form-group col col-xs-12 cb'>
+        </FormGroup>
+        <FormGroup className='col col-xs-12 cb'>
           {valueItem}
-        </div>
+        </FormGroup>
       </div>
     );
   }
@@ -182,15 +183,15 @@ const ConstraintComponent = React.createClass({
       />
     ];
 
-    items = items.concat(constraint.fields.map((attr, index) => <div
-      key={'Field:'+id+':'+index} className='form-group col col-xs-12 cb'><label className='label--big'>{attr.title}</label> {this._constructComponent(id, attr, constraint.data)} </div>));
+    items = items.concat(constraint.fields.map((attr, index) => <FormGroup
+      key={'Field:'+id+':'+index} className='col col-xs-12 cb'><label className='label--big'>{attr.title}</label> {this._constructComponent(id, attr, constraint.data)} </FormGroup>));
 
     items.push(
-      <div key='Constraint Remove Button' className='form-group col col-xs-12 cb text-right'>
-        <button type="button" className='btn btn-danger' onClick={this._remove.bind(this, id)} key={'delete:'+id}>
+      <FormGroup key='Constraint Remove Button' className='col col-xs-12 cb text-right'>
+        <Button bsStyle="danger" onClick={this._remove.bind(this, id)} key={'delete:'+id}>
           Remove {_.capitalize(this.props.type)}
-        </button>
-      </div>
+        </Button>
+      </FormGroup>
     );
 
     return (

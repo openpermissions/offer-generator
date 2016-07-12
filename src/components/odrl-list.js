@@ -23,7 +23,7 @@ const React = require('react'),
       actions = require('../actions'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
-      {MenuItem, Menu, Wrapper, Button} = require('react-aria-menubutton');
+      {MenuItem, DropdownButton} = require('react-bootstrap');
 
 const OdrlList = React.createClass({
   displayName: 'ODRL List',
@@ -75,12 +75,12 @@ const OdrlList = React.createClass({
     let entityItems = _.map(existingEntities, (entity, id) => this._constructComponent(entity)) || [];
 
     let menuItems = [
-      <MenuItem key={''} value={''} className='MenuButton-menuItem'>
+      <MenuItem key={''} value={''}>
         New {_.capitalize(this.props.type)}
       </MenuItem>
     ];
     menuItems = menuItems.concat(_.map(newEntities, entity => {
-      return (<MenuItem key={entity.data['@id']} className='MenuButton-menuItem'>{entity.data['@id']}</MenuItem>);
+      return (<MenuItem eventKey={entity.data['@id']}>{entity.data['@id']}</MenuItem>);
     }));
 
     return (
@@ -89,12 +89,14 @@ const OdrlList = React.createClass({
         <div>
           {entityItems}
         </div>
-        <Wrapper className='MenuButton' onSelection={this._add}>
-          <Button className='btn btn-primary'>Add {_.capitalize(this.props.type)}</Button>
-          <Menu className='MenuButton-menu'>
-            <ul>{menuItems}</ul>
-          </Menu>
-        </Wrapper>
+        <DropdownButton
+          bsStyle="primary"
+          onSelect={this._add}
+          title={"Add " + _.capitalize(this.props.type)}
+          id={this.props.type}>
+          {menuItems}
+        </DropdownButton>
+
       </div>
     );
 

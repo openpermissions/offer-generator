@@ -24,32 +24,20 @@ const React = require('react'),
       spatial = require('../util').spatial,
       host = require('../util').host;
 
-
-function uiDecorator (attr) {
-  if (attr['className'] === undefined) {
-    attr['className'] = 'form-control';
-  }
-  else{
-    attr['className'] = attr['className'] + ' form-control';
-  }
-
-  return attr;
-}
-
 function TextInput(attributes) {
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   return React.createElement('input', attributes);
 }
 
 function IntegerInput(attributes) {
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   attributes.type = 'number';
   attributes.step = '1';
   return React.createElement('input', attributes);
 }
 
 function NonNegativeIntegerInput(attributes) {
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   attributes.type = 'number';
   attributes.step = '1';
   attributes.min = '0';
@@ -57,7 +45,7 @@ function NonNegativeIntegerInput(attributes) {
 }
 
 function DecimalInput(attributes) {
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   attributes.type = 'number';
   attributes.step = '0.01';
   return React.createElement('input', attributes);
@@ -70,7 +58,7 @@ function DatetimeInput(attributes) {
 }
 
 function TextArea(attributes) {
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   if (attributes.value === undefined) {
     attributes.value = ''
   };
@@ -78,25 +66,25 @@ function TextArea(attributes) {
 }
 
 function OdrlList(attributes) {
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   const OdrlList = require('./odrl-list');
   return React.createElement(OdrlList, attributes);
 }
 
 function Rule(attributes) {
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   const Rule = require('./rule');
   return React.createElement(Rule, attributes);
 }
 
 function Constraint(attributes) {
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   const Constraint = require('./constraint');
   return React.createElement(Constraint, attributes);
 }
 
 function ActionDropdown(attributes){
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   let sortedActions = _.sortBy(actions, a => a[1]);
   const children = sortedActions.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
   children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select an Action --', disabled:true}));
@@ -105,7 +93,7 @@ function ActionDropdown(attributes){
 }
 
 function OperatorDropdown(attributes){
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   let sortedOperators = _.sortBy(operators, a => a[1]);
   const children = sortedOperators.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
   children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select an Operator --', disabled:true}));
@@ -114,7 +102,7 @@ function OperatorDropdown(attributes){
 }
 
 function UnitDropdown(attributes){
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   let sortedUnits = _.sortBy(units, a => a[1]);
   const children = sortedUnits.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
   children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select a Unit --', disabled:true}));
@@ -123,7 +111,7 @@ function UnitDropdown(attributes){
 }
 
 function SpatialDropdown(attributes){
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   let sortedSpatial = _.sortBy(spatial, a => a[1]);
   const children = sortedSpatial.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
   children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select a Geographic Area --', disabled:true}));
@@ -132,7 +120,7 @@ function SpatialDropdown(attributes){
 }
 
 function HostDropdown(attributes){
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   let sortedHost = _.sortBy(host, a => a[1]);
   const children = sortedHost.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
   children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select a Host --', disabled:true}));

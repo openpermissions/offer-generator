@@ -22,7 +22,8 @@ const React = require('react'),
       LinkedStateMixin = require('react-addons-linked-state-mixin'),
       actions = require('../actions'),
       componentMap = require('./component-map'),
-      PropTypes = require('../prop-types');
+      PropTypes = require('../prop-types'),
+      {FormGroup} = require('react-bootstrap');
 
 const OfferComponent = React.createClass({
   displayName: 'Offer Component',
@@ -78,11 +79,11 @@ const OfferComponent = React.createClass({
    * @returns {object}
    */
   render: function () {
-    let items = <div class='form-group col col-xs-12 cb'/>;
+    let items = <FormGroup class='col col-xs-12 cb'/>;
     let offer = this.props.template.get('offer');
     if (offer) {
-      items = offer.get('fields').map((attr, index) => <div className='form-group col col-xs-12 cb'
-        key={'Field:' + index}><label className="label--big">{attr.get('title')}</label>{this._constructComponent(attr, offer.get('data'))}</div>);
+      items = offer.get('fields').map((attr, index) => <FormGroup className='col col-xs-12 cb'
+        key={'Field:' + index}><label className="label--big">{attr.get('title')}</label>{this._constructComponent(attr, offer.get('data'))}</FormGroup>);
     }
 
     return (

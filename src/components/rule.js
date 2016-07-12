@@ -23,7 +23,8 @@ const React = require('react'),
       actions = require('../actions'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
-      uuid = require('uuid');
+      uuid = require('uuid'),
+      {Button} = require('react-bootstrap');
 
 const RuleComponent = React.createClass({
   displayName: 'Rule Component',
@@ -92,14 +93,14 @@ const RuleComponent = React.createClass({
   render: function () {
     let rule = this.props.value;
     let id = rule.data['@id'];
-    let items = rule.fields.map((attr, index) => <div
-      key={'Field:'+id+':'+index} className='form-group'><label className='label--big'>{attr.title}</label>{this._constructComponent(id, attr, rule.data)} </div>);
+    let items = rule.fields.map((attr, index) => <FormGroup
+      key={'Field:'+id+':'+index}><label className='label--big'>{attr.title}</label>{this._constructComponent(id, attr, rule.data)} </FormGroup>);
     items.push(
-      <div key='Rule Remove Button' className='form-group text-right'>
-        <button type="button" className='btn btn-danger' onClick={this._remove.bind(this, id)} key={'delete:'+id}>
+      <FormGroup key='Rule Remove Button' className='text-right'>
+        <Button bsStyle="danger" onClick={this._remove.bind(this, id)} key={'delete:'+id}>
           Remove {_.capitalize(this.props.type)}
-        </button>
-      </div>
+        </Button>
+      </FormGroup>
     );
 
     return (
