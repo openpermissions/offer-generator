@@ -29,15 +29,11 @@ const Example = React.createClass({
     }
   },
 
-  displayJson: function(json) {
-    this.setState({jsonld: json})
-  },
-
   render: function () {
     return (
       <div>
         <OfferGenerator
-          onCreate={this.displayJson}
+          onCreate={(json) => {this.setState({jsonld: json})}}
         />
         <JsonLdViewer
           jsonld={this.state.jsonld}
