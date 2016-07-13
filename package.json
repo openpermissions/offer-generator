@@ -47,12 +47,8 @@
   },
   "scripts": {
     "test": "mocha -r mock-local-storage --compilers js:babel/register test/**/*.js test/*.js",
-    "build": "NODE_ENV=production browserify src/main.js | uglifyjs -m | (cat src/header.txt && cat) > dist/bundle.js",
-    "build-dev": "browserify src/main.js -o dist/bundle.js --debug",
-    "build-dev:watch": "watchify src/main.js -v -o dist/bundle.js --debug",
-    "build-dev-css": "node-sass -r --output-style compressed assets/scss/global.scss assets/css/global.css",
-    "build-dev-css:watch": "node-sass -rw --output-style compressed assets/scss/global.scss assets/css/global.css",
-    "deploy": "npm run build-dev-css && NODE_ENV=production browserify src/main.js | uglifyjs -m | (cat src/header.txt && cat) | node deploy"
+    "build-example": "browserify example/src/index.js -o example/dist/app.js --debug",
+    "build-example:watch": "watchify example/src/index.js -v -o example/dist/app.js --debug"
   },
   "browserify": {
     "transform": [

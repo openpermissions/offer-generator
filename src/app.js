@@ -14,18 +14,35 @@
  */
 'use strict';
 
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    {Provider} = require('react-redux'),
-    {createStore} = require('redux'),
-    app = require('./reducers'),
-    App = require('./components/app');
-
+const React = require('react'),
+      Offer = require('./containers/offer'),
+      {Provider} = require('react-redux'),
+      {createStore} = require('redux'),
+      app = require('./reducers');
 
 let store = createStore(app);
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App/>
-  </Provider>,
-  document.getElementById('app'));
+const App = React.createClass({
+  displayName: 'Offer Generator',
+
+  propTypes: {
+    onCreate: React.PropTypes.func.isRequired
+  },
+
+  /**
+   * Render the offer generator
+   *
+   * @returns {object}
+   */
+  render: function () {
+    return (
+      <Provider store={store}>
+        <Offer
+          onCreate={this.props.onCreate}
+        />
+      </Provider>
+    );
+  }
+});
+
+export default App;

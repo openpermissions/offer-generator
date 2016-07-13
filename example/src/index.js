@@ -1,5 +1,4 @@
-/**
- * Main page for Offer generator
+/** Main page for Offer generator
  *
  * Copyright 2016 Open Permissions Platform Coalition
  *
@@ -17,26 +16,35 @@
 'use strict';
 
 const React = require('react'),
-      OfferTemplate = require('../containers/offer'),
-      GeneratedJsonLd = require('../containers/generatedJsonLd');
+      ReactDOM = require('react-dom'),
+      {OfferGenerator, JsonLdViewer} = require('../../src');
 
 
-const App = React.createClass({
-  displayName: 'Offer Generator App',
+const Example = React.createClass({
+  displayName: 'Example Use of Offer Generator',
 
-  /**
-   * Render the offer generator
-   *
-   * @returns {object}
-   */
+  getInitialState: function () {
+    return {
+      jsonld: null
+    }
+  },
+
+  displayJson: function(json) {
+    this.setState({jsonld: json})
+  },
+
   render: function () {
     return (
       <div>
-        <OfferTemplate />
-        <GeneratedJsonLd />
+        <OfferGenerator
+          onCreate={this.displayJson}
+        />
+        <JsonLdViewer
+          jsonld={this.state.jsonld}
+        />
       </div>
     );
   }
 });
 
-export default App;
+ReactDOM.render(<Example/>, document.getElementById('app'));

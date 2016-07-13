@@ -1,23 +1,30 @@
+/**
+ * Copyright 2016 Open Permissions Platform Coalition
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+'use strict';
+
 const {combineReducers} = require('redux'),
       OfferTemplate = require('../template'),
       Immutable = require('immutable');
 
 const _template = new OfferTemplate();
 
-const jsonld = (state=null, action) => {
-  switch (action.type) {
-    case 'GENERATE_OFFER':
-      let newState = JSON.parse(_template.constructOffer());
-      return Immutable.fromJS(newState);
-
-    default:
-      return state;
-  }
-};
-
 const template = (state, action) => {
   switch (action.type) {
     case 'GENERATE_OFFER':
+      let offer = JSON.parse(_template.constructOffer());
+      action.onCreate(offer);
       return state;
 
     case 'UPDATE_ATTRIBUTE':
@@ -44,7 +51,7 @@ const template = (state, action) => {
 
 const app = combineReducers({
   template,
-  jsonld
+  //jsonld
 });
 
 export default app

@@ -1,4 +1,4 @@
-/* ODRL items
+/**
  *
  * Copyright 2016 Open Permissions Platform Coalition
  *

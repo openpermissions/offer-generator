@@ -1,8 +1,9 @@
 
 module.exports = {
-  generateOffer: () => {
+  generateOffer: (onCreate) => {
     return {
-      type: 'GENERATE_OFFER'
+      type: 'GENERATE_OFFER',
+      onCreate: onCreate
     }
   },
   updateAttribute: (attrs) => {

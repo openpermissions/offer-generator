@@ -1,6 +1,4 @@
 /**
- * Display top-level ODRL offer
- *
  * Copyright 2016 Open Permissions Platform Coalition
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
