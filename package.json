@@ -5,7 +5,6 @@
   "repository": "https://github.com/openpermissions/offer-generator",
   "license": "Apache-2.0",
   "dependencies": {
-    "baconjs": "~0.7.41",
     "classnames": "^2.1.5",
     "eslint": "^1.10.3",
     "immutable": "~3.4.1",
@@ -17,6 +16,8 @@
     "react-addons-pure-render-mixin": "~0.14.0",
     "react-bootstrap": "^0.29.5",
     "react-dom": "~0.14.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
     "string-format": "0.5.0",
     "uuid": "^1.4.2"
   },

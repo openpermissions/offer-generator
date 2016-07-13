@@ -20,7 +20,6 @@ const React = require('react'),
       actions = require('../util').actions,
       units = require('../util').units,
       operators = require('../util').operators,
-      constraints = require('../util').constraints,
       spatial = require('../util').spatial,
       host = require('../util').host;
 
@@ -67,19 +66,19 @@ function TextArea(attributes) {
 
 function OdrlList(attributes) {
   attributes.className = 'form-control';
-  const OdrlList = require('./odrl-list');
+  const OdrlList = require('../containers/odrl-list');
   return React.createElement(OdrlList, attributes);
 }
 
 function Rule(attributes) {
   attributes.className = 'form-control';
-  const Rule = require('./rule');
+  const Rule = require('../containers/rule');
   return React.createElement(Rule, attributes);
 }
 
 function Constraint(attributes) {
   attributes.className = 'form-control';
-  const Constraint = require('./constraint');
+  const Constraint = require('../containers/constraint');
   return React.createElement(Constraint, attributes);
 }
 

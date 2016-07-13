@@ -20,97 +20,10 @@ const React = require('react'),
       _ = require('lodash'),
       PureRenderMixin = require('react-addons-pure-render-mixin'),
       LinkedStateMixin = require('react-addons-linked-state-mixin'),
-      actions = require('../actions'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
-      constraints = require('../util').constraints,
+      ConstraintValue = require('../containers/constraint-value'),
       {FormGroup, Button} = require('react-bootstrap');
-
-
-const ConstraintValue = React.createClass({
-  displayName: 'Constraint Value',
-
-  mixins: [ LinkedStateMixin ],
-
-  propTypes: {
-    template: PropTypes.Immutable.Map.isRequired,
-    constraint: React.PropTypes.object
-  },
-
-
-  getInitialState: function () {
-    let allConstraints = {};
-    constraints.map(c => {allConstraints[c[0]] = c});
-    return {
-      allConstraints: allConstraints
-    }
-  },
-
-  /**
-   * Update constraint type based on value of change event
-   *
-   * @param id - id of constraint
-   * @private
-   */
-  _updateConstraintType: function(id) {
-    return event => {
-      const value = event.target.value;
-      actions.updateConstraint.push({id: id, key: value, value: undefined});
-    }
-  },
-
-  /**
-   * Update constraint value based on value of change event
-   *
-   * @param id - id of constraint
-   * @param key - constraint type
-   * @private
-   */
-  _updateConstraintValue: function(id, key) {
-    return event => {
-      let value = event.target.value;
-      let type = event.target.type;
-      actions.updateConstraint.push({id: id, key: key, type: type, value: value});
-    }
-  },
-
-  /**
-   * Render the constraint value
-   *
-   * @returns {object}
-   */
-  render: function() {
-    let id = this.props.constraint.data['@id'];
-    let key = _.find(Object.keys(this.props.constraint.data), key => Object.keys(this.state.allConstraints).indexOf(key) != -1);
-    let value = this.props.constraint.data[key];
-    if (value) {
-      value = value[0]['@value'] || value[0]['@id'];
-    }
-
-    let sortedConstraints = _.sortBy(constraints, a => a[1]);
-    const children = sortedConstraints.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
-    children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select a constraint --', disabled:true}));
-    let keyItem = React.createElement('select', {required: true, className: 'form-control', defaultValue: '', value: key, onChange: this._updateConstraintType(id)}, children);
-    let valueItem = '';
-
-    if (key) {
-      let uiClass = this.state.allConstraints[key][2];
-      valueItem = componentMap[uiClass]( {required: true, value: value, onChange: this._updateConstraintValue(id, key)})
-    }
-
-    return (
-      <div>
-        <FormGroup className='col col-xs-12 cb'>
-          {keyItem}
-        </FormGroup>
-        <FormGroup className='col col-xs-12 cb'>
-          {valueItem}
-        </FormGroup>
-      </div>
-    );
-  }
-});
-
 
 const ConstraintComponent = React.createClass({
   displayName: 'Constraint Component',
@@ -121,7 +34,9 @@ const ConstraintComponent = React.createClass({
     template: PropTypes.Immutable.Map.isRequired,
     type: React.PropTypes.string,
     value: React.PropTypes.object,
-    parent: React.PropTypes.object
+    parent: React.PropTypes.object,
+    updateAttribute: React.PropTypes.func.isRequired, 
+    removeEntity: React.PropTypes.func.isRequired
   },
 
 
@@ -134,7 +49,7 @@ const ConstraintComponent = React.createClass({
   _updateAttribute: function(id, key) {
     return event => {
       const value = event.target.value;
-      actions.updateAttribute.push({type: [this.props.type, id], key: key, value: value});
+      this.props.updateAttribute({attrType: [this.props.type, id], key: key, value: value});
     }
   },
 
@@ -163,7 +78,7 @@ const ConstraintComponent = React.createClass({
    * @private
    */
   _remove(id) {
-    actions.removeOdrlEntity.push({parent: this.props.parent, key: this.props['_key'], id: id})
+    this.props.removeEntity({parent: this.props.parent, key: this.props['_key'], id: id})
   },
 
   /**

@@ -1,4 +1,6 @@
 /**
+ * Main page for Offer generator
+ *
  * Copyright 2016 Open Permissions Platform Coalition
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -14,18 +16,27 @@
  */
 'use strict';
 
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    {Provider} = require('react-redux'),
-    {createStore} = require('redux'),
-    app = require('./reducers'),
-    App = require('./components/app');
+const React = require('react'),
+      OfferTemplate = require('../containers/offer'),
+      GeneratedJsonLd = require('../containers/generatedJsonLd');
 
 
-let store = createStore(app);
+const App = React.createClass({
+  displayName: 'Offer Generator App',
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App/>
-  </Provider>,
-  document.getElementById('app'));
+  /**
+   * Render the offer generator
+   *
+   * @returns {object}
+   */
+  render: function () {
+    return (
+      <div>
+        <OfferTemplate />
+        <GeneratedJsonLd />
+      </div>
+    );
+  }
+});
+
+export default App;

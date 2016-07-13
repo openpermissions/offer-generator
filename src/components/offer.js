@@ -20,7 +20,6 @@ const React = require('react'),
       _ = require('lodash'),
       PureRenderMixin = require('react-addons-pure-render-mixin'),
       LinkedStateMixin = require('react-addons-linked-state-mixin'),
-      actions = require('../actions'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
       {FormGroup} = require('react-bootstrap');
@@ -31,7 +30,8 @@ const OfferComponent = React.createClass({
   mixins: [ PureRenderMixin, LinkedStateMixin ],
 
   propTypes: {
-    template: PropTypes.Immutable.Map.isRequired
+    template: PropTypes.Immutable.Map.isRequired,
+    updateAttribute: React.PropTypes.func.isRequired
   },
 
   /**
@@ -47,8 +47,7 @@ const OfferComponent = React.createClass({
       if (type == 'number') {
         value = Number(value);
       }
-
-      actions.updateAttribute.push({type: 'offer', key: key, value: value});
+      this.props.updateAttribute({attrType: 'offer', key: key, value: value});
     }
   },
 
@@ -79,7 +78,7 @@ const OfferComponent = React.createClass({
    * @returns {object}
    */
   render: function () {
-    let items = <FormGroup class='col col-xs-12 cb'/>;
+    let items = <FormGroup className='col col-xs-12 cb'/>;
     let offer = this.props.template.get('offer');
     if (offer) {
       items = offer.get('fields').map((attr, index) => <FormGroup className='col col-xs-12 cb'

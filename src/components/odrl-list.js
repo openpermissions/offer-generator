@@ -20,7 +20,6 @@ const React = require('react'),
       _ = require('lodash'),
       PureRenderMixin = require('react-addons-pure-render-mixin'),
       LinkedStateMixin = require('react-addons-linked-state-mixin'),
-      actions = require('../actions'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
       {MenuItem, DropdownButton} = require('react-bootstrap');
@@ -34,7 +33,8 @@ const OdrlList = React.createClass({
     template: PropTypes.Immutable.Map.isRequired,
     type: React.PropTypes.string,
     value: React.PropTypes.array,
-    parent: React.PropTypes.object
+    parent: React.PropTypes.object,
+    addEntity: React.PropTypes.func.isRequired
   },
 
   /**
@@ -55,7 +55,7 @@ const OdrlList = React.createClass({
    * @private
    */
   _add(value, event) {
-    actions.addOdrlEntity.push({parent: this.props.parent, type: this.props.type, key: this.props['_key'], id: value})
+    this.props.addEntity({parent: this.props.parent, attrType: this.props.type, key: this.props['_key'], id: value})
   },
 
   /**

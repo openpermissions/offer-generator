@@ -20,11 +20,10 @@ const React = require('react'),
       _ = require('lodash'),
       PureRenderMixin = require('react-addons-pure-render-mixin'),
       LinkedStateMixin = require('react-addons-linked-state-mixin'),
-      actions = require('../actions'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
       uuid = require('uuid'),
-      {Button} = require('react-bootstrap');
+      {FormGroup, Button} = require('react-bootstrap');
 
 const RuleComponent = React.createClass({
   displayName: 'Rule Component',
@@ -35,7 +34,9 @@ const RuleComponent = React.createClass({
     template: PropTypes.Immutable.Map.isRequired,
     type: React.PropTypes.string,
     value: React.PropTypes.object,
-    parent: React.PropTypes.object
+    parent: React.PropTypes.object,
+    updateAttribute: React.PropTypes.func.isRequired,
+    removeEntity: React.PropTypes.func.isRequired
   },
 
   /**
@@ -53,7 +54,7 @@ const RuleComponent = React.createClass({
         value = Number(value);
       }
 
-      actions.updateAttribute.push({type: [this.props.type, id], key: key, value: value});
+      this.props.updateAttribute({attrType: [this.props.type, id], key: key, value: value});
     }
   },
 
@@ -82,7 +83,7 @@ const RuleComponent = React.createClass({
    * @private
    */
   _remove(id) {
-    actions.removeOdrlEntity.push({parent: this.props.parent, key: this.props['_key'], id: id})
+    this.props.removeEntity({parent: this.props.parent, key: this.props['_key'], id: id})
   },
 
   /**
