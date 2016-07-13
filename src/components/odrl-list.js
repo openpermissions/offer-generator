@@ -22,9 +22,11 @@ const React = require('react'),
       LinkedStateMixin = require('react-addons-linked-state-mixin'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
-      {MenuItem, DropdownButton} = require('react-bootstrap');
+      {MenuItem, DropdownButton} = require('react-bootstrap'),
+      {connect} = require('react-redux'),
+      {mapDispatchToProps} = require('../util');
 
-const OdrlList = React.createClass({
+const ListComponent = React.createClass({
   displayName: 'ODRL List',
 
   mixins: [ PureRenderMixin, LinkedStateMixin ],
@@ -102,5 +104,10 @@ const OdrlList = React.createClass({
 
   }
 });
+
+const OdrlList = connect(
+  null,
+  mapDispatchToProps
+)(ListComponent);
 
 module.exports = OdrlList;

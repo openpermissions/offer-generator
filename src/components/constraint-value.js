@@ -23,10 +23,13 @@ const React = require('react'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
       constraints = require('../util').constraints,
-      {FormGroup} = require('react-bootstrap');
+      {FormGroup} = require('react-bootstrap'),
+      {connect} = require('react-redux'),
+      {mapDispatchToProps} = require('../util');
 
 
-const ConstraintValue = React.createClass({
+
+const ConstraintValueComponent = React.createClass({
   displayName: 'Constraint Value',
 
   mixins: [ LinkedStateMixin ],
@@ -110,5 +113,11 @@ const ConstraintValue = React.createClass({
     );
   }
 });
+
+const ConstraintValue = connect(
+  null,
+  mapDispatchToProps
+)(ConstraintValueComponent);
+
 
 module.exports = ConstraintValue;

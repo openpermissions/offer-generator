@@ -23,7 +23,9 @@ const React = require('react'),
       componentMap = require('./component-map'),
       PropTypes = require('../prop-types'),
       uuid = require('uuid'),
-      {FormGroup, Button} = require('react-bootstrap');
+      {FormGroup, Button} = require('react-bootstrap'),
+      {connect} = require('react-redux'),
+      {mapDispatchToProps} = require('../util');
 
 const RuleComponent = React.createClass({
   displayName: 'Rule Component',
@@ -112,4 +114,10 @@ const RuleComponent = React.createClass({
   }
 });
 
-module.exports = RuleComponent;
+
+const Rule = connect(
+  null,
+  mapDispatchToProps
+)(RuleComponent);
+
+module.exports = Rule;
