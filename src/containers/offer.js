@@ -1,22 +1,12 @@
 const React = require('react'),
       {connect} = require('react-redux'),
       OfferComponent  = require('../components/offer'),
-      {generateOffer, updateAttribute} = require('../actions'),
-      {Button, FormGroup} = require('react-bootstrap');
+      {Button, FormGroup} = require('react-bootstrap'),
+      {mapDispatchToProps} = require('../util')
 
 const mapStateToProps = (state) => {
   return {
     template: state.template
-  }
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSubmitClick: () => {
-      dispatch(generateOffer()) },
-    updateAttribute: (attrs) => {
-      dispatch(updateAttribute(attrs))
-    }
   }
 };
 
@@ -26,7 +16,7 @@ const OfferContainer = React.createClass({
   propTypes: {
     template: React.PropTypes.object.isRequired,
     jsonld: React.PropTypes.object,
-    onSubmitClick: React.PropTypes.func.isRequired,
+    generateOffer: React.PropTypes.func.isRequired,
     updateAttribute: React.PropTypes.func.isRequired
   },
 
@@ -34,7 +24,7 @@ const OfferContainer = React.createClass({
     return (
       <form className='OfferForm form row' onSubmit={event => {
         event.preventDefault();
-        this.props.onSubmitClick();
+        this.props.generateOffer();
       }}>
         <OfferComponent
           template={this.props.template}

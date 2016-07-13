@@ -15,7 +15,9 @@
  */
 'use strict';
 
-const _ = require('lodash');
+const _ = require('lodash'),
+      {bindActionCreators} = require('redux'),
+      reduxActions = require('./actions');
 
 /**
  * Return a function that picks the values from an object in the same order as
@@ -32,6 +34,10 @@ function mapObject(obj, func) {
   const attrs = _.keys(obj);
   return _.zipObject(attrs, _.map(attrs, func));
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(Object.assign({}, reduxActions), dispatch);
+};
 
 const ID_PREFIX = "http://openpermissions.org/ns/id/";
 const TEMP_ID_PREFIX="http://openpermissions.org/ns/temporary_id/";
@@ -437,5 +443,6 @@ module.exports = {
   OPEX_PREFIX: OPEX_PREFIX,
   DCTERM_PREFIX: DCTERM_PREFIX,
   valuesFor: valuesFor,
-  mapObject: mapObject
+  mapObject: mapObject,
+  mapDispatchToProps: mapDispatchToProps
 };

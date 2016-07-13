@@ -1,19 +1,11 @@
 const React = require('react'),
       {connect} = require('react-redux'),
       ConstraintValue  = require('../components/constraint-value'),
-      {updateConstraint} = require('../actions');
+      {mapDispatchToProps} = require('../util');
 
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateConstraint: (attrs) => {
-      dispatch(updateConstraint(attrs))
-    }
-  }
-};
-const ConstraintContainer = connect(
+const ConstraintValueContainer = connect(
   null,
   mapDispatchToProps
 )(ConstraintValue);
 
-export default ConstraintContainer
+export default ConstraintValueContainer
