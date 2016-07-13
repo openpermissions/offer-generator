@@ -5,7 +5,7 @@ const React = require('react'),
 
 const mapStateToProps = (state) => {
   return {
-    jsonld: state.template.get('jsonld')
+    jsonld: state.jsonld
   }
 };
 

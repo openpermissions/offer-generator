@@ -51,7 +51,7 @@ function DecimalInput(attributes) {
 }
 
 function DatetimeInput(attributes) {
-  attributes = uiDecorator(attributes);
+  attributes.className = 'form-control';
   attributes.type = 'date';
   return React.createElement('input', attributes);
 }
