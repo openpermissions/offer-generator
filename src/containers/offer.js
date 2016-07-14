@@ -17,7 +17,7 @@
 const React = require('react'),
       {connect} = require('react-redux'),
       OfferComponent  = require('../components/offer'),
-      {Button, FormGroup} = require('react-bootstrap'),
+      {Button, FormGroup, Panel} = require('react-bootstrap'),
       {mapDispatchToProps} = require('../util')
 
 const mapStateToProps = (state) => {
@@ -33,24 +33,27 @@ const OfferContainer = React.createClass({
     template: React.PropTypes.object.isRequired,
     generateOffer: React.PropTypes.func.isRequired,
     updateAttribute: React.PropTypes.func.isRequired,
-    onCreate: React.PropTypes.func.isRequired
+    onCreate: React.PropTypes.func.isRequired,
+    buttonText: React.PropTypes.string
   },
 
   render: function () {
     return (
-      <form className='OfferForm form row' onSubmit={event => {
-        event.preventDefault();
-        this.props.generateOffer(this.props.onCreate);
-      }}>
-        <OfferComponent
-          template={this.props.template}
-          updateAttribute={this.props.updateAttribute}
-        />
+      <Panel>
+        <form className='OfferForm form row' onSubmit={event => {
+          event.preventDefault();
+          this.props.generateOffer(this.props.onCreate);
+        }}>
+          <OfferComponent
+            template={this.props.template}
+            updateAttribute={this.props.updateAttribute}
+          />
 
-        <FormGroup className='col col-xs-12 cb'>
-          <Button bsStyle="success" type="submit">Generate Offer</Button>
-        </FormGroup>
-      </form>
+          <FormGroup className='col col-xs-12 cb'>
+            <Button bsStyle="success" type="submit">{this.props.buttonText || 'Generate Offer'}</Button>
+          </FormGroup>
+        </form>
+    </Panel>
     )
   }
 });

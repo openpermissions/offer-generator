@@ -31,7 +31,7 @@ const JsonLd = React.createClass({
     }
     return (
 
-      <Panel header="Generated Offer">
+      <Panel  header="Offer">
         {jsonld}
       </Panel>
     );

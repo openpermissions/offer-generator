@@ -26,7 +26,8 @@ const App = React.createClass({
   displayName: 'Offer Generator',
 
   propTypes: {
-    onCreate: React.PropTypes.func.isRequired
+    onCreate: React.PropTypes.func.isRequired,
+    buttonText: React.PropTypes.string
   },
 
   /**
@@ -39,6 +40,7 @@ const App = React.createClass({
       <Provider store={store}>
         <Offer
           onCreate={this.props.onCreate}
+          buttonText={this.props.buttonText}
         />
       </Provider>
     );
