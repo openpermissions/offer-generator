@@ -20,14 +20,20 @@ const React = require('react'),
       {createStore} = require('redux'),
       app = require('./reducers');
 
-let store = createStore(app);
 
 const App = React.createClass({
   displayName: 'Offer Generator',
+  store: undefined,
 
   propTypes: {
     onCreate: React.PropTypes.func.isRequired,
-    buttonText: React.PropTypes.string
+    buttonText: React.PropTypes.string,
+    assigner: React.PropTypes.string
+  },
+
+
+  componentWillMount(){
+    this.store = createStore(app(this.props.assigner));
   },
 
   /**
@@ -37,7 +43,7 @@ const App = React.createClass({
    */
   render: function () {
     return (
-      <Provider store={store}>
+      <Provider store={this.store}>
         <Offer
           onCreate={this.props.onCreate}
           buttonText={this.props.buttonText}

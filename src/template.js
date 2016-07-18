@@ -217,6 +217,42 @@ class Target {
   }
 }
 
+class Assigner {
+  /**
+   * Represents an assigner party entity.
+   */
+  constructor(data, assigner="") {
+    this.template = `
+    {
+      "{op}reference": [{
+        "@value": ""
+      }],
+      "{op}provider": [{
+        "@value": "{assigner}"
+      }],
+      "@id": "{tempId}{id}",
+      "@type": [
+        "{op}Party"
+       ]
+    }`;
+    this.uiClass = 'assigner';
+    this.fields = [
+      {
+        key: [op('provider'), '0', '@value'],
+        title: 'Assigner ',
+        uiClass: 'text-input',
+        required: true,
+        mutable: (assigner === "")
+      }
+    ];
+    if (!data) {
+      const offerData = {id: getUuid(), tempId: util.TEMP_ID_PREFIX, op: util.OP_PREFIX, assigner: assigner};
+      data = JSON.parse(this.template.format(offerData));
+    }
+    this.data = data;
+  }
+}
+
 class Offer {
   /**
    * Represents a top-level offer.
@@ -273,6 +309,20 @@ class Offer {
         mutable: true
       },
       {
+        key: [odrl('assigner')],
+        type: 'assigner',
+        uiClass: 'assigner',
+        required: true,
+        mutable: true
+      },
+      {
+        key: [odrl('duty')],
+        type: 'duty',
+        uiClass: 'odrl-list',
+        required: false,
+        mutable: true
+      },
+      {
         key: [odrl('permission')],
         type: 'permission',
         uiClass: 'odrl-list',
@@ -289,13 +339,6 @@ class Offer {
       {
         key: [odrl('target')],
         type: 'target',
-        uiClass: 'odrl-list',
-        required: false,
-        mutable: true
-      },
-      {
-        key: [odrl('duty')],
-        type: 'duty',
         uiClass: 'odrl-list',
         required: false,
         mutable: true
@@ -325,12 +368,14 @@ class OfferTemplate {
    *  At any point constructOffer can be called to translate the internal data structure back into and ODRL-format offer.
    */
 
-  constructor() {
+  constructor(assignerId=undefined) {
+    this.assignerId=assignerId;
     this.offer=new Offer();
     this.permission={};
     this.prohibition={};
     this.constraint={};
     this.duty={};
+    this.assigner={};
     this.target={};
   }
 
@@ -344,6 +389,7 @@ class OfferTemplate {
     this.prohibition={};
     this.constraint={};
     this.duty={};
+    this.assigner={};
     this.target={};
 
     let self = this;
@@ -367,6 +413,8 @@ class OfferTemplate {
             self.constraint[i['@id']] = new Constraint(i);
           } else if (type.indexOf(odrl('Duty')) != -1) {
             self.duty[i['@id']] = new Duty(i);
+          } else if (type.indexOf(op('Party')) != -1) {
+            self.assigner[i['@id']] = new Assigner(i, this.assignerId);
           } else if (Object.keys(i).indexOf(op('fromSet')) != -1) {
             self.target[i['@id']] = new Target(i);
           }
@@ -454,7 +502,8 @@ class OfferTemplate {
       prohibition: Prohibition,
       duty: Duty,
       constraint: Constraint,
-      target: Target
+      target: Target,
+      assigner: Assigner
     };
 
     //Check type
@@ -481,7 +530,7 @@ class OfferTemplate {
         throw new Error(type + ' ' + id + ' does not exist')
       }
     } else {
-      rule = new ruleType();
+      rule = new ruleType(undefined, this.assignerId);
       this[type][rule.data['@id']] = rule;
     }
 
@@ -596,6 +645,6 @@ class OfferTemplate {
   }
 }
 
-const customObjects = [Offer, Rule, Constraint, Target];
+const customObjects = [Offer, Rule, Constraint, Target, Assigner];
 
 module.exports = OfferTemplate;
