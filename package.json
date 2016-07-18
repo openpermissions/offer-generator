@@ -1,9 +1,10 @@
 {
   "name": "offer-generator",
   "description": "Library for generating ODRL Licence offers",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "repository": "https://github.com/openpermissions/offer-generator",
   "license": "Apache-2.0",
+  "main": "./dist/index.js",
   "dependencies": {
     "classnames": "^2.1.5",
     "eslint": "^1.10.3",
@@ -46,6 +47,8 @@
     "webdriverio": "^2.4.3"
   },
   "scripts": {
+    "build": "babel src --presets babel-preset-es2015 --out-dir dist",
+    "prepublish": "npm run build",
     "test": "mocha -r mock-local-storage --compilers js:babel/register test/**/*.js test/*.js",
     "build-example": "browserify example/src/index.js -o example/dist/app.js --debug",
     "build-example:watch": "watchify example/src/index.js -v -o example/dist/app.js --debug"

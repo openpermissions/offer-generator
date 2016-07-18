@@ -17,7 +17,7 @@
 
 const React = require('react'),
       ReactDOM = require('react-dom'),
-      {OfferGenerator, JsonLdViewer} = require('../../src');
+      {OfferGenerator, JsonLdViewer} = require('offer-generator');
 
 
 const Example = React.createClass({
