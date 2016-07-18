@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "main": "./dist/index.js",
   "dependencies": {
-    "offer-generator": "0.1.1"
+    "offer-generator": "0.1.2"
   },
   "devDependencies": {
     "babel": "^5.8.23",
