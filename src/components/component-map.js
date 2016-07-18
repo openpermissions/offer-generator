@@ -68,6 +68,12 @@ function OdrlList(attributes) {
   return React.createElement(OdrlList, attributes);
 }
 
+function Assigner(attributes) {
+  attributes.className = 'form-control';
+  const Assigner = require('./assigner');
+  return React.createElement(Assigner, attributes);
+}
+
 function Rule(attributes) {
   attributes.className = 'form-control';
   const Rule = require('./rule');
@@ -134,6 +140,7 @@ const componentMap = {
   'datetime-input': DatetimeInput,
   'text-area': TextArea,
   'odrl-list': OdrlList,
+  'assigner': Assigner,
   'rule': Rule,
   'constraint': Constraint,
   'target': Rule,
