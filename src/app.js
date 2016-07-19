@@ -18,22 +18,39 @@ const React = require('react'),
       Offer = require('./containers/offer'),
       {Provider} = require('react-redux'),
       {createStore} = require('redux'),
-      app = require('./reducers');
+      app = require('./reducers'),
+      _ = require('lodash');
 
 
 const App = React.createClass({
   displayName: 'Offer Generator',
-  store: undefined,
 
   propTypes: {
     onCreate: React.PropTypes.func.isRequired,
     buttonText: React.PropTypes.string,
-    assigner: React.PropTypes.string
+    assigner: React.PropTypes.string,
+    initialOffer: React.PropTypes.object
   },
 
+  getInitialState() {
+    return {
+      store: undefined
+    }
+  },
 
   componentWillMount(){
-    this.store = createStore(app(this.props.assigner));
+    app(this.props.assigner, this.props.initialOffer).then( reducer => {
+      this.setState({store: createStore(reducer)});
+    });
+  },
+  
+  componentWillUpdate(newProps) {
+    if (!(_.isEqual(newProps.initialOffer, this.props.initialOffer)) ||
+       !(_.isEqual(newProps.assigner, this.props.assigner))) {
+      app(newProps.assigner, newProps.initialOffer).then( reducer => {
+        this.state.store.replaceReducer(reducer);
+      });
+    }
   },
 
   /**
@@ -42,8 +59,15 @@ const App = React.createClass({
    * @returns {object}
    */
   render: function () {
+    if (!this.state.store) {
+      return (
+        <div>
+          <h1> Loading...</h1>
+        </div>
+      )
+    }
     return (
-      <Provider store={this.store}>
+      <Provider store={this.state.store}>
         <Offer
           onCreate={this.props.onCreate}
           buttonText={this.props.buttonText}

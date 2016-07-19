@@ -18,10 +18,7 @@ const {combineReducers} = require('redux'),
       OfferTemplate = require('../template'),
       Immutable = require('immutable');
 
-
-const templateReducer = (assigner) => {
-  const _template = new OfferTemplate(assigner);
-
+function reducer(_template) {
   return (state, action) => {
     switch (action.type) {
       case 'GENERATE_OFFER':
@@ -49,13 +46,23 @@ const templateReducer = (assigner) => {
         return Immutable.fromJS(_template.toJS());
     }
   }
+}
+
+const templateReducer = (assigner, initialOffer) => {
+  const _template = new OfferTemplate(assigner);
+  if (initialOffer) {
+    return _template.loadOffer(initialOffer).then(() => Promise.resolve(reducer(_template)))
+  } else {
+    return Promise.resolve(reducer(_template))
+  }
 };
 
 
-const app = (assigner) => {
-  const template = templateReducer(assigner);
-  return combineReducers({
-    template
+const app = (assigner, initialOffer) => {
+  return templateReducer(assigner, initialOffer).then(template => {
+    return Promise.resolve(combineReducers({
+      template
+    }));
   });
 };
 

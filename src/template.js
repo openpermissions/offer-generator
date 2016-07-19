@@ -414,7 +414,7 @@ class OfferTemplate {
           } else if (type.indexOf(odrl('Duty')) != -1) {
             self.duty[i['@id']] = new Duty(i);
           } else if (type.indexOf(op('Party')) != -1) {
-            self.assigner[i['@id']] = new Assigner(i, this.assignerId);
+            self.assigner[i['@id']] = new Assigner(i, self.assignerId);
           } else if (Object.keys(i).indexOf(op('fromSet')) != -1) {
             self.target[i['@id']] = new Target(i);
           }
