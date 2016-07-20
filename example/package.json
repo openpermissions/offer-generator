@@ -13,12 +13,10 @@
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
     "browserify-versionify": "^1.0.6",
-    "uglify-js": "^2.4.24",
-    "watchify": "^3.4.0"
+    "uglify-js": "^2.4.24"
   },
   "scripts": {
     "build": "browserify src/index.js -o dist/app.js --debug",
-    "build-example:watch": "watchify src/index.js -v -o dist/app.js --debug"
   },
   "browserify": {
     "transform": [
