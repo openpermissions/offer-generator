@@ -22,6 +22,7 @@ let Prohibition = OfferTemplate.__get__('Prohibition');
 let Duty = OfferTemplate.__get__('Duty');
 let Constraint = OfferTemplate.__get__('Constraint');
 let Target = OfferTemplate.__get__('Target');
+let Assigner = OfferTemplate.__get__('Assigner');
 
 describe('Offer', function() {
   it('should store data when provided', function () {
@@ -109,6 +110,40 @@ describe('Target', function() {
   })
 });
 
+describe('Assigner', function() {
+  it('should store data when provided', function () {
+    let data = {foo: 'bar'};
+    let assigner = new Assigner(data);
+    assigner.data.should.eql(data)
+  });
+
+  it('should load default template if data not provided ', function () {
+    let assigner = new Assigner();
+    Object.keys(assigner.data).should.eql(
+      ['http://openpermissions.org/ns/op/1.1/reference', 'http://openpermissions.org/ns/op/1.1/provider', '@id', '@type'])
+  });
+
+  it('should make provider mutable if assigner not provided', function () {
+    let assigner = new Assigner();
+    assigner.fields[0].mutable.should.eql(true);
+  });
+
+  it('should make provider immutable if assigner provided', function () {
+    let assigner = new Assigner(undefined, 'foo');
+    assigner.fields[0].mutable.should.eql(false);
+  });
+
+  it('should set assigner if provided', function () {
+    let assigner = new Assigner(undefined, 'foo');
+    assigner.data['http://openpermissions.org/ns/op/1.1/provider'][0]['@value'].should.equal('foo')
+  });
+
+  it('should not set assigner if not provided', function () {
+    let assigner = new Assigner(undefined);
+    assigner.data['http://openpermissions.org/ns/op/1.1/provider'][0]['@value'].should.equal('')
+  })
+});
+
 describe('OfferTemplate', function() {
   describe('constructor', function () {
     it('should construct a new offer template on construction', function () {
@@ -178,6 +213,10 @@ describe('OfferTemplate', function() {
             '@id': 'id:set1',
             '@type': ['Asset'],
             'ol:fromSet': {'@id': 'id:set1'}
+          },
+          {
+            '@id': 'id:party1',
+            '@type': ['http://openpermissions.org/ns/op/1.1/Party']
           }
         ]
       };
@@ -256,6 +295,15 @@ describe('OfferTemplate', function() {
           })
         })
       });
+
+      it('should store the Assigner in the assigner object', function () {
+        template.assigner.should.eql({
+          'http://openpermissions.org/ns/temporary_id/party1': new Assigner({
+            '@id': 'http://openpermissions.org/ns/temporary_id/party1',
+            '@type': ['http://openpermissions.org/ns/op/1.1/Party']
+          })
+        })
+      });
   });
 
     describe('loadOffer with no elements', function () {
@@ -306,7 +354,10 @@ describe('OfferTemplate', function() {
         template.constraint.should.eql({})
       });
       it('should have an empty target', function () {
-        template.constraint.should.eql({})
+        template.target.should.eql({})
+      });
+      it('should have an empty assigner', function () {
+        template.assigner.should.eql({})
       });
     });
 
@@ -388,7 +439,8 @@ describe('OfferTemplate', function() {
       ['permission', 'http://openpermissions.org/ns/temporary_id/perm1'],
       ['prohibition', 'http://openpermissions.org/ns/temporary_id/prohib1'],
       ['duty', 'http://openpermissions.org/ns/temporary_id/duty1'],
-      ['constraint', 'http://openpermissions.org/ns/temporary_id/constraint1']];
+      ['constraint', 'http://openpermissions.org/ns/temporary_id/constraint1'],
+      ['assigner', 'http://openpermissions.org/ns/temporary_id/assigner1']];
 
     let data = [
       {
@@ -409,6 +461,10 @@ describe('OfferTemplate', function() {
       {
         '@id': 'http://openpermissions.org/ns/id/duty1',
         '@type': ['http://www.w3.org/ns/odrl/2/Duty']
+      },
+      {
+        '@id': 'http://openpermissions.org/ns/id/assigner1',
+        '@type': ['http://openpermissions.org/ns/op/1.1/Party']
       }
     ];
 
@@ -436,7 +492,7 @@ describe('OfferTemplate', function() {
     describe('offer', function () {
       let template = new OfferTemplate();
 
-      let types = ['permission', 'prohibition', 'duty', 'target'];
+      let types = ['permission', 'prohibition', 'duty', 'target', 'assigner'];
       types.forEach(type => {
         it('should add new entity to offer for type ' + type, function () {
           Object.keys(template[type]).length.should.eql(0);
@@ -1038,6 +1094,20 @@ describe('OfferTemplate', function() {
               mutable: true
             },
             {
+              key: ['http://www.w3.org/ns/odrl/2/assigner'],
+              type: 'assigner',
+              uiClass: 'assigner',
+              required: true,
+              mutable: true
+            },
+            {
+              key: ['http://www.w3.org/ns/odrl/2/duty'],
+              type: 'duty',
+              uiClass: 'odrl-list',
+              required: false,
+              mutable: true
+            },
+            {
               key: ['http://www.w3.org/ns/odrl/2/permission'],
               type: 'permission',
               uiClass: 'odrl-list',
@@ -1054,13 +1124,6 @@ describe('OfferTemplate', function() {
             {
               key: ['http://www.w3.org/ns/odrl/2/target'],
               type: 'target',
-              uiClass: 'odrl-list',
-              required: false,
-              mutable: true
-            },
-            {
-              key: ['http://www.w3.org/ns/odrl/2/duty'],
-              type: 'duty',
               uiClass: 'odrl-list',
               required: false,
               mutable: true
@@ -1246,7 +1309,9 @@ describe('OfferTemplate', function() {
             }],
             uiClass: 'target'
           }
-        }
+        },
+        assigner: {},
+        assignerId: undefined
       })
     })
   })
