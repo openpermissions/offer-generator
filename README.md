@@ -3,7 +3,6 @@
 A React Component that allows you to construct ODRL licence offers in json-ld format.
 
 ## Using the Offer Generator
-The Offer Generator module provides two main components to help with offer building: OfferGenerator and JsonLDViewer.
 A full example can be found in the [example](https://github.com/openpermissions/offer-generator/tree/master/example) directory.
 
 ### Install
@@ -12,8 +11,18 @@ Start by installing the offer-generator via npm:
 npm install offer-generator --save
 ```
 
-### Offer Generator
-This is the main building tool for constructing an ODRL offer.
+### Render
+The offer-generator package provides two main components:
+
++ **OfferGenerator**: The main building tool for constructing an ODRL offer.
++ **JsonLDViewer**: A helper component that can be used to display the json-ld constructed by the offer builder
+
+Both use bootstrap components and class names. 
+For details on how to customise the css please refer to the [Bootstrap](http://getbootstrap.com) documentation.
+
+#### Offer Generator
+This is the main building tool for constructing an ODRL offer. 
+
 
 ```javascript
 {OfferGenerator} = require('offer-generator');
@@ -28,9 +37,9 @@ class Component extends React.Component {
 } 
 ```
 
-#### API
+##### API
 
-##### onCreate
+###### onCreate
 
 Pass a function to call when the button is clicked. The function will receive the json-ld offer as a parameter.
 Use this function to retrieve the end result offer, and process it as needed.
@@ -54,7 +63,7 @@ class Component extends React.Component {
 } 
 ```
 
-##### buttonText
+###### buttonText
 This controls the text that is displayed on the main creation button of the builder. 
 
 + *Type:* string
@@ -76,7 +85,7 @@ class Component extends React.Component {
 } 
 ```
 
-##### assigner
+###### assigner
 This provides a default assigner id for the offer builder. If provided then the assigner will be displayed but will not be editable within the builder.
 
 + *Type:* string
@@ -98,7 +107,7 @@ class Component extends React.Component {
 } 
 ```
 
-##### initialOffer
+###### initialOffer
 This provides an initial offer to populate the offer builder with on initialisation.
 
 + *Type:* json-ld object
@@ -120,8 +129,7 @@ class Component extends React.Component {
 } 
 ```
 
-### JSON-ld Viewer
-This is a helper component that can be used to display the json-ld constructed by the offer builder
+#### JSON-ld Viewer
 ```javascript
 {JsonLdViewer} = require('offer-generator');
 class Component extends React.Component {
@@ -136,9 +144,9 @@ class Component extends React.Component {
     }
 } 
 ```
-#### API
+##### API
 
-##### jsonld
+###### jsonld
 
 Pass the json ld to display.
 
@@ -224,11 +232,19 @@ python -m SimpleHTTPServer
 You should be able to view the application at
 [http://localhost:8000](http://localhost:8000).
 
-##  Tests
+###  Tests
 
 Unit tests are written using [mocha](https://github.com/mochajs/mocha), which
 can be run with
 
 ```bash
 npm test
+```
+
+### Publish to npm
+The offer-viewer has been published to npm under the OpenPermissions account. To publish a new version, increase the version number
+in package.json and run
+
+```
+npm publish ./
 ```
