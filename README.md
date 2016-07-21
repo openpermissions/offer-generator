@@ -2,6 +2,16 @@
 
 A React Component that allows you to construct ODRL licence offers in json-ld format.
 
++ [Acronyms](#acronyms)
++ [Using the Offer Generator](#using-the-offer-generator)
++ [Developing the Offer Generator](#developing-the-offer-generator)
+
+## Acronyms
+
+| Acronym | Description                   |
+| :------ | :----------                   |
+| ODRL    | Open Digital Rights Language  |
+
 ## Using the Offer Generator
 A full example can be found in the [example](https://github.com/openpermissions/offer-generator/tree/master/example) directory.
 
