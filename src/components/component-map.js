@@ -89,8 +89,8 @@ function Constraint(attributes) {
 function ActionDropdown(attributes){
   attributes.className = 'form-control';
   let sortedActions = _.sortBy(actions, a => a[1]);
-  const children = sortedActions.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
-  children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select an Action --', disabled:true}));
+  const children = sortedActions.map( a => React.createElement('option', {key:a[0], value: a[0]}, a[1]));
+  children.unshift(React.createElement('option', {key:'', value: '', disabled:true}, '-- Select an Action --'));
   attributes['defaultValue'] = '';
   return React.createElement('select', attributes, children)
 }
@@ -98,8 +98,8 @@ function ActionDropdown(attributes){
 function OperatorDropdown(attributes){
   attributes.className = 'form-control';
   let sortedOperators = _.sortBy(operators, a => a[1]);
-  const children = sortedOperators.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
-  children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select an Operator --', disabled:true}));
+  const children = sortedOperators.map( a => React.createElement('option', {key:a[0], value: a[0]}, a[1]));
+  children.unshift(React.createElement('option', {key:'', value: '', disabled:true}, '-- Select an Operator --'));
   attributes['defaultValue'] = '';
   return React.createElement('select', attributes, children)
 }
@@ -107,8 +107,8 @@ function OperatorDropdown(attributes){
 function UnitDropdown(attributes){
   attributes.className = 'form-control';
   let sortedUnits = _.sortBy(units, a => a[1]);
-  const children = sortedUnits.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
-  children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select a Unit --', disabled:true}));
+  const children = sortedUnits.map( a => React.createElement('option', {key:a[0], value: a[0]}, a[1]));
+  children.unshift(React.createElement('option', {key:'', value: '', disabled:true}, '-- Select a Unit --'));
   attributes['defaultValue'] = '';
   return React.createElement('select', attributes, children)
 }
@@ -116,8 +116,8 @@ function UnitDropdown(attributes){
 function SpatialDropdown(attributes){
   attributes.className = 'form-control';
   let sortedSpatial = _.sortBy(spatial, a => a[1]);
-  const children = sortedSpatial.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
-  children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select a Geographic Area --', disabled:true}));
+  const children = sortedSpatial.map( a => React.createElement('option', {key:a[0], value: a[0]}, a[1]));
+  children.unshift(React.createElement('option', {key:'', value: '', disabled:true}, '-- Select a Geographic Area --'));
   attributes['defaultValue'] = '';
   return React.createElement('select', attributes, children)
 }
@@ -125,8 +125,8 @@ function SpatialDropdown(attributes){
 function HostDropdown(attributes){
   attributes.className = 'form-control';
   let sortedHost = _.sortBy(host, a => a[1]);
-  const children = sortedHost.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
-  children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select a Host --', disabled:true}));
+  const children = sortedHost.map( a => React.createElement('option', {key:a[0], value: a[0]}, a[1]));
+  children.unshift(React.createElement('option', {key:'', value: '', disabled:true}, '-- Select a Host --'));
   attributes['defaultValue'] = '';
   return React.createElement('select', attributes, children)
 }
