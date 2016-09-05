@@ -89,8 +89,8 @@ const ConstraintValueComponent = React.createClass({
     }
 
     let sortedConstraints = _.sortBy(constraints, a => a[1]);
-    const children = sortedConstraints.map( a => React.createElement('option', {key:a[0], value: a[0], label: a[1]}));
-    children.unshift(React.createElement('option', {key:'', value: '', label: '-- Select a constraint --', disabled:true}));
+    const children = sortedConstraints.map( a => React.createElement('option', {key:a[0], value: a[0]}, a[1]));
+    children.unshift(React.createElement('option', {key:'', value: '', disabled:true}, '-- Select a constraint --'));
     let keyItem = React.createElement('select', {required: true, className: 'form-control', defaultValue: '', value: key, onChange: this._updateConstraintType(id)}, children);
     let valueItem = '';
 
