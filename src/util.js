@@ -127,6 +127,7 @@ const operators = [
 
 const units = [
   ['http://cvx.iptc.org/iso4217a/GBP', 'GBP'],
+  ['http://cvx.iptc.org/iso4217a/EUR', 'EUR'],
   [OPEX_PREFIX+'pixel', 'Pixel'],
   [OPEX_PREFIX+'visitorsPerMonth', 'Visitors Per Month']
 ];
